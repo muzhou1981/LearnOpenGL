@@ -61,6 +61,11 @@ else()
   set(LIBS )
 endif(WIN32)
 
+find_package(Freetype REQUIRED)
+message(STATUS "Freetype included at ${FREETYPE_INCLUDE_DIRS}")
+include_directories(${FREETYPE_INCLUDE_DIRS})
+set(LIBS ${LIBS} ${FREETYPE_LIBRARIES})
+
 set(CHAPTERS
     1.getting_started
     2.lighting
@@ -188,6 +193,10 @@ set(GUEST_ARTICLES
 	8.guest/2022/7.area_lights/2.multiple_area_lights
 )
 
+set(MATH_IS_FUNS
+  9.math_is_fun/1.quadratic_function
+)
+
 configure_file(configuration/root_directory.h.in configuration/root_directory.h)
 include_directories(${CMAKE_BINARY_DIR}/configuration)
 
@@ -276,5 +285,8 @@ endforeach(CHAPTER)
 foreach(GUEST_ARTICLE ${GUEST_ARTICLES})
 	create_project_from_sources(${GUEST_ARTICLE} "")
 endforeach(GUEST_ARTICLE)
+foreach(MATH_IS_FUN ${MATH_IS_FUNS})
+	create_project_from_sources(${MATH_IS_FUN} "")
+endforeach(MATH_IS_FUN)
 
 include_directories(${CMAKE_SOURCE_DIR}/includes)
